@@ -1,3 +1,5 @@
+use std::any::type_name;
+
 fn main() {
     /*
     Vector type의 Under the Hood analyze
@@ -36,9 +38,27 @@ fn main() {
     v.remove(1);
     assert_eq!(v,[10,30,35,40,50]);
 
+    let s = "hello".to_string();
+    let x = &s;
+    let xi = &s[0..1];
+    //이게 슬라이스와 레퍼런스의 메모리 상의 차이점이다.
+    // 슬라이스는 연속된, 어쩌면 무한정일 수도 있는 메모리의 포인터 역할을 한다.
+    // 레퍼런스는 말 그대로 해당 객체의 포인터다.
+    // 여기서 String 변수는 어차피 Vec이랑 매우 유사하기에...
+    // Vec의 포인터를 가리키는 포인터라고 할 수 있다.
+    print_type_of(x);
+
+    assert_eq!("hello".len(), 5);
+    // . 연산자가 자동적으로 "슬라이스" 생성
+    
+    
+
     //하지만 이것들은 영향을 받은 요소 뒤 모두에게 영향을 미친다
     // maybe sequential list로 구현한 듯 하다 -> 확인해볼 것
 
 
     
+}
+fn print_type_of<T>(_: &T) {
+    println!("{}", std::any::type_name::<T>());
 }
