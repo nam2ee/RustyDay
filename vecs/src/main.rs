@@ -34,7 +34,7 @@ fn main() {
     
     let mut v = vec![10,20,30,40,50];
     v.insert(3,35);
-
+    v.insert(4, 44);
     v.remove(1);
     assert_eq!(v,[10,30,35,40,50]);
 
