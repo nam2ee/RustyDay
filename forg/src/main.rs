@@ -1,23 +1,33 @@
-static mut STASH: &i32 = &128;
-static okx:&i32 =  &456;
-fn main() {
-    println!("Hello, world!");
+//레퍼런스 받아서 레퍼런스로 반환
+fn main()
+{
+    let mut k:&i32 = &23;
 
-    let x = &okx;
-    p(&x);
+    {
+        let parabola = vec![9,4,5,0,21,321,32];
 
-    unsafe{
-        println!("{}",&&&&STASH); //chaining
+       // k = smallest(&parabola); // do not live long error 발생!
+
     }
+    println!("{}", k);
 
 }
 
+fn smallest(v:&[i32]) -> &i32
+{
+    // 이러면 v는 확실히 i32짜리 슬라이스임을 알 수 있다.
+    // 내부 구조  v...0 ...1
+    //         ->메모리 -> 길이가 몇인가
+    let mut x = &v[0]; // 이건 슬라이스에서 메모리를 타고 들어간거
+    let y = &v[1..];
 
-fn p(x:&'static i32){
+    for i in y // 여기서 y는 &i32의 이터레이터 객체를 반환한다
+    {
+        if *i < *x
+        {
+            x = i;
+        }
 
-    unsafe{
-        STASH = x;
-        // 이 때 참조를 전달하고 죽는 것이다
-        // static과의 라이프사이클이 안 맞음
-    }    
+    }
+    x
 }
